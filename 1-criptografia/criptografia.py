@@ -4,6 +4,7 @@ import requests
 
 from dotenv import load_dotenv
 from string import ascii_lowercase
+from json import dumps
 
 load_dotenv()
 
@@ -63,9 +64,11 @@ def get_resumo_criptografico(decoded):
 
 def write_in_file(data):
     print('writing file...')
+ 
+    data = dumps(data)
 
     json_file = open(FILENAME, "w+")
-    json_file.write(str(data))
+    json_file.write(data)
     json_file.close()
 
 def post_file():
@@ -75,7 +78,7 @@ def post_file():
     url = challenge_api.format(os.getenv("CODENATION_API_KEY"))
 
     with open(FILENAME, 'rb') as data:
-        response = requests.post(url, files={'answer': open(FILENAME, "rb")})
+        response = requests.post(url, files={'answer': data})
 
     print(response.status_code)
     print(response.json())

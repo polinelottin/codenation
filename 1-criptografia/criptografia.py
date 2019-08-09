@@ -44,10 +44,10 @@ def decode_data(code, steps):
 
     for letter in code: 
         if(letter in ascii_lowercase):
-            letter_position = LETTERS[letter] + steps
+            letter_position = LETTERS[letter] - steps
 
-            if(letter_position > len(LETTERS)):
-                letter_position = letter_position - len(LETTERS)
+            if(letter_position <= 0) :
+                letter_position = len(LETTERS) + letter_position
 
             new_letter = reversed_dictionary[letter_position]
         else:
